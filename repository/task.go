@@ -65,7 +65,7 @@ func (tr *taskRepository) FetchTasksByStatusAndUserID(c context.Context, userID 
 	return response, nil
 }
 
-func (tr *taskRepository) FetchTaskByID(c context.Context, id primitive.ObjectID) (domain.Task, error) {
+func (tr *taskRepository) FetchTaskByID(c context.Context, id string) (domain.Task, error) {
 	var response domain.Task
 
 	return response, nil
@@ -76,10 +76,10 @@ func (tr *taskRepository) UpdateTaskByID(c context.Context, task *domain.Task) e
 
 }
 
-func (tr *taskRepository) UpdateTaskStatusByID(c context.Context, status string, id primitive.ObjectID) error {
+func (tr *taskRepository) UpdateTaskStatusByID(c context.Context, status string, id string) error {
 	return nil
 }
 
-func (tr *taskRepository) DeleteTaskByID(c context.Context, id primitive.ObjectID) error {
+func (tr *taskRepository) DeleteTaskByID(c context.Context, id string) error {
 	return nil
 }

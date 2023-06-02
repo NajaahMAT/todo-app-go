@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
-	"todo-app-go/api/route/"
+	"todo-app-go/api/route"
 	"todo-app-go/bootstrap"
 
 	"github.com/gin-gonic/gin"
