@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 	"time"
 	"todo-app-go/domain"
 	"todo-app-go/internal/util"
@@ -20,9 +21,11 @@ func NewSignupUsecase(userRepository domain.UserRepository, timeout time.Duratio
 }
 
 func (s *signupUsecase) Create(c context.Context, user *domain.User) error {
+	fmt.Println("usecase.signup/create")
 	ctx, cancel := context.WithTimeout(c, s.contextTimeout)
 	defer cancel()
 	return s.userRepository.Create(ctx, user)
+	// return nil
 }
 
 func (s *signupUsecase) GetUserByEmail(c context.Context, email string) (domain.User, error) {

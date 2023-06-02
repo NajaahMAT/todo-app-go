@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"time"
 
 	// "todo-app-go/api/middleware"
@@ -13,7 +14,8 @@ import (
 func Setup(env *bootstrap.Env, timeout time.Duration, db mongo.Database, gin *gin.Engine) {
 	publicRouter := gin.Group("")
 	// All Public APIs
-	// NewSignupRouter(env, timeout, db, publicRouter)
+	fmt.Println("route.route.go/Setup")
+	NewSignupRouter(env, timeout, db, publicRouter)
 	NewLoginRouter(env, timeout, db, publicRouter)
 	// NewRefreshTokenRouter(env, timeout, db, publicRouter)
 

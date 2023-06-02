@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"todo-app-go/bootstrap"
 	"todo-app-go/domain"
@@ -23,6 +24,8 @@ func (s *SignupController) Signup(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
 		return
 	}
+
+	fmt.Println("signup request: ", signupRequest)
 
 	_, err = s.SignupUsecase.GetUserByEmail(c, signupRequest.Email)
 	if err == nil {
@@ -47,6 +50,8 @@ func (s *SignupController) Signup(c *gin.Context) {
 		Email:    signupRequest.Email,
 		Password: signupRequest.Password,
 	}
+
+	fmt.Println("user: ", user)
 
 	err = s.SignupUsecase.Create(c, &user)
 	if err != nil {

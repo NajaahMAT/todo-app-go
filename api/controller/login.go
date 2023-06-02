@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"todo-app-go/bootstrap"
 	"todo-app-go/domain"
@@ -23,6 +24,7 @@ func (l *LoginController) Login(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("login request: ", loginRequest)
 	user, err := l.LoginUsecase.GetUserByEmail(c, loginRequest.Email)
 	if err != nil {
 		c.JSON(http.StatusNotFound, domain.ErrorResponse{Message: "User not found with the given email"})

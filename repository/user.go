@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"todo-app-go/domain"
 	"todo-app-go/mongo"
 
@@ -25,9 +27,14 @@ func NewUserRepository(db mongo.Database, collection string) domain.UserReposito
 func (ur *userRepository) Create(c context.Context, user *domain.User) error {
 	collection := ur.database.Collection(ur.collection)
 
-	_, err := collection.InsertOne(c, user)
+	insertedID, err := collection.InsertOne(c, user)
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+	log.Println("User created successfully, inserted_id: ", insertedID)
 
-	return err
+	// return err
+	return nil
 }
 
 func (ur *userRepository) Fetch(c context.Context) ([]domain.User, error) {
@@ -54,6 +61,7 @@ func (ur *userRepository) GetByEmail(c context.Context, email string) (domain.Us
 	collection := ur.database.Collection(ur.collection)
 	var user domain.User
 	err := collection.FindOne(c, bson.M{"email": email}).Decode(&user)
+	fmt.Println("user found", user)
 	return user, err
 }
 

@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"time"
 	"todo-app-go/api/controller"
 	"todo-app-go/bootstrap"
@@ -13,6 +14,8 @@ import (
 )
 
 func NewSignupRouter(env *bootstrap.Env, t time.Duration, db mongo.Database, g *gin.RouterGroup) {
+	fmt.Println("route.signup.go/NewSignupRouter")
+
 	ur := repository.NewUserRepository(db, domain.CollectionUser)
 
 	sc := &controller.SignupController{
