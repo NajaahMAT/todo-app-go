@@ -26,10 +26,10 @@ type TaskRepository interface {
 	FetchAllTasksByUserID(c context.Context, userID string) ([]Task, error)
 	FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate time.Time, endDate time.Time) ([]Task, error)
 	FetchTasksByStatusAndUserID(c context.Context, userID string, status string) ([]Task, error)
-	FetchTaskByID(c context.Context, id primitive.ObjectID) (Task, error)
+	FetchTaskByID(c context.Context, id string) (Task, error)
 	UpdateTaskByID(c context.Context, task *Task) error
-	UpdateTaskStatusByID(c context.Context, status string, id primitive.ObjectID) error
-	DeleteTaskByID(c context.Context, id primitive.ObjectID) error
+	UpdateTaskStatusByID(c context.Context, status string, id string) error
+	DeleteTaskByID(c context.Context, id string) error
 }
 
 type TaskUsecase interface {
@@ -37,8 +37,8 @@ type TaskUsecase interface {
 	FetchAllTasksByUserID(c context.Context, userID string) ([]Task, error)
 	FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate time.Time, endDate time.Time) ([]Task, error)
 	FetchTasksByStatusAndUserID(c context.Context, userID string, status string) ([]Task, error)
-	FetchTaskByID(c context.Context, id primitive.ObjectID) (Task, error)
+	FetchTaskByID(c context.Context, id string) (Task, error)
 	UpdateTaskByID(c context.Context, task *Task) error
-	UpdateTaskStatusByID(c context.Context, status string, id primitive.ObjectID) error
-	DeleteTaskByID(c context.Context, id primitive.ObjectID) error
+	UpdateTaskStatusByID(c context.Context, status string, id string) error
+	DeleteTaskByID(c context.Context, id string) error
 }
