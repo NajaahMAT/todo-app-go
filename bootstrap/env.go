@@ -11,7 +11,7 @@ type Env struct {
 	ServerAddress  string `mapstructure:"SERVER_ADDRESS"`
 	PORT           int    `mapstructure:"PORT"`
 	ContextTimeout int    `mapstructure:"CONTEXT_TIMEOUT"`
-	MongoURI       string `mapstructure:"MONGODB_URI"`
+	MongoURI       string `mapstructure:"MONGO_URI"`
 	DBName         string `mapstructure:"DB_NAME"`
 
 	//auth configs
