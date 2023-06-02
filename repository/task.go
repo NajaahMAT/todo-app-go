@@ -6,6 +6,7 @@ import (
 	"todo-app-go/domain"
 	"todo-app-go/mongo"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -30,9 +31,26 @@ func (tr *taskRepository) Create(c context.Context, task *domain.Task) error {
 }
 
 func (tr *taskRepository) FetchAllTasksByUserID(c context.Context, userID string) ([]domain.Task, error) {
-	var response []domain.Task
+	collection := tr.database.Collection(tr.collection)
 
-	return response, nil
+	var tasks []domain.Task
+
+	idHex, err := primitive.ObjectIDFromHex(userID)
+	if err != nil {
+		return tasks, err
+	}
+
+	cursor, err := collection.Find(c, bson.M{"userID": idHex})
+	if err != nil {
+		return nil, err
+	}
+
+	err = cursor.All(c, &tasks)
+	if tasks == nil {
+		return []domain.Task{}, err
+	}
+
+	return tasks, err
 }
 
 func (tr *taskRepository) FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate time.Time, endDate time.Time) ([]domain.Task, error) {
