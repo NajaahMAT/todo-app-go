@@ -9,12 +9,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type loginController struct {
+type LoginController struct {
 	LoginUsecase domain.LoginUsecase
 	Env          *bootstrap.Env
 }
 
-func (l *loginController) Login(c *gin.Context) {
+func (l *LoginController) Login(c *gin.Context) {
 	var loginRequest domain.LoginRequest
 
 	err := c.ShouldBind(&loginRequest)
