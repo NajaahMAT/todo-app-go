@@ -16,9 +16,18 @@ type Task struct {
 	Title       string             `bson:"title" json:"title"`
 	Status      string             `bson:"status" json:"status"`
 	Description string             `bson:"description" json:"description"`
-	Files       string             `bson:"files" json:"files"`
-	CreatedAt   time.Time          `bson:"created_at" json:"created_at"`
+	File        string             `bson:"file" json:"file"`
+	CreatedAt   string             `bson:"created_at" json:"created_at"`
 	UserID      primitive.ObjectID `bson:"user_id" json:"user_id"`
+}
+
+type CreateTaskReq struct {
+	Title       string `form:"title" json:"title"`
+	Status      string `form:"status" json:"status"`
+	Description string `form:"description" json:"description"`
+	File        string `form:"file" json:"file"`
+	CreatedAt   string `form:"created_at" json:"created_at"`
+	UserID      string `form:"user_id" json:"user_id"`
 }
 
 type TaskRepository interface {
