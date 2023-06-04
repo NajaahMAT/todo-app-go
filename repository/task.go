@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"log"
+	"runtime"
 	"time"
 	"todo-app-go/domain"
 	"todo-app-go/mongo"
@@ -31,22 +33,31 @@ func (tr *taskRepository) Create(c context.Context, task *domain.Task) error {
 }
 
 func (tr *taskRepository) FetchAllTasksByUserID(c context.Context, userID string) ([]domain.Task, error) {
+	_, filename, line, _ := runtime.Caller(1)
+
 	collection := tr.database.Collection(tr.collection)
+
+	log.Println("************userID: ", userID)
 
 	var tasks []domain.Task
 
 	idHex, err := primitive.ObjectIDFromHex(userID)
 	if err != nil {
+		log.Printf("[error] %s:%d %v\n", filename, line, err)
 		return tasks, err
 	}
 
-	cursor, err := collection.Find(c, bson.M{"userID": idHex})
+	cursor, err := collection.Find(c, bson.M{"user_id": idHex})
 	if err != nil {
+		log.Printf("[error] %s:%d %v\n", filename, line, err)
 		return nil, err
 	}
 
+	log.Println(cursor)
+
 	err = cursor.All(c, &tasks)
 	if tasks == nil {
+		log.Printf("[error] %s:%d %v\n", filename, line, err)
 		return []domain.Task{}, err
 	}
 

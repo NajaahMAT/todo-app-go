@@ -30,6 +30,14 @@ type CreateTaskReq struct {
 	UserID      string `form:"user_id" json:"user_id"`
 }
 
+type GetTasksReq struct {
+	UserID string `form:"user_id" json:"user_id"`
+	// ID        string `form:"id" json:"id"`
+	// Status    string `form:"status" json:"status"`
+	// StartDate string `form:"start_date" json:"start_date"`
+	// EndDate   string `form:"end_date" json:"end_date"`
+}
+
 type TaskRepository interface {
 	Create(c context.Context, task *Task) error
 	FetchAllTasksByUserID(c context.Context, userID string) ([]Task, error)

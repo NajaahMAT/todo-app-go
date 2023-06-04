@@ -52,39 +52,16 @@ func (t *TaskController) CreateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, nil)
 }
 
-func (t *TaskController) GetAllTasksByUserID(c *gin.Context) {
-	var request domain.CreateTaskReq
+func (t *TaskController) GetTasks(c *gin.Context) {
+	userId := c.Param("user_id")
 
-	err := c.ShouldBind(&request)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
-		return
-	}
+	fmt.Println("request user_id: ", userId)
 
-	fmt.Println("request: ", request)
-
-	userId, err := primitive.ObjectIDFromHex(request.UserID)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Invalid userid"})
-	}
-
-	task := domain.Task{
-		ID:          primitive.NewObjectID(),
-		Title:       request.Title,
-		Status:      request.Status,
-		Description: request.Description,
-		File:        request.File,
-		CreatedAt:   request.CreatedAt,
-		UserID:      userId,
-	}
-
-	fmt.Println("create task request: ", task)
-
-	err = t.TaskUsecase.Create(c, &task)
+	tasks, err := t.TaskUsecase.FetchAllTasksByUserID(c, userId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, nil)
+	c.JSON(http.StatusOK, tasks)
 }

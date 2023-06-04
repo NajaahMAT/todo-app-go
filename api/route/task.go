@@ -22,3 +22,14 @@ func CreateTaskRouter(env *bootstrap.Env, t time.Duration, db mongo.Database, g 
 
 	g.POST("/task", tc.CreateTask)
 }
+
+func GetTasksRouter(env *bootstrap.Env, t time.Duration, db mongo.Database, g *gin.RouterGroup) {
+	ur := repository.NewTaskRepository(db, domain.CollectionTask)
+
+	tc := &controller.TaskController{
+		TaskUsecase: usecase.NewTaskUsecase(ur, t),
+		Env:         env,
+	}
+
+	g.GET("/task/user/:user_id", tc.GetTasksByUserID)
+}

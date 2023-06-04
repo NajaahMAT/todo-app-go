@@ -23,4 +23,5 @@ func Setup(env *bootstrap.Env, timeout time.Duration, db mongo.Database, gin *gi
 
 	// All Private APIs
 	CreateTaskRouter(env, timeout, db, protectedRouter)
+	GetTasksRouter(env, timeout, db, protectedRouter)
 }
