@@ -31,7 +31,7 @@ func (t *taskUsecase) FetchAllTasksByUserID(c context.Context, userID string) ([
 	return t.taskRepository.FetchAllTasksByUserID(ctx, userID)
 }
 
-func (t *taskUsecase) FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate time.Time, endDate time.Time) ([]domain.Task, error) {
+func (t *taskUsecase) FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate string, endDate string) ([]domain.Task, error) {
 	ctx, cancel := context.WithTimeout(c, t.contextTimeout)
 	defer cancel()
 	return t.taskRepository.FetchTasksByDateRangeAndUserID(ctx, userID, startDate, endDate)

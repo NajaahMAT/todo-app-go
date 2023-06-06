@@ -22,6 +22,8 @@ func Setup(env *bootstrap.Env, timeout time.Duration, db mongo.Database, gin *gi
 	NewTokenRouter(env, timeout, db, publicRouter)
 
 	// All Private APIs
-	CreateTaskRouter(env, timeout, db, protectedRouter)
-	GetTasksRouter(env, timeout, db, protectedRouter)
+	// CreateTaskRouter(env, timeout, db, protectedRouter)
+	// GetTasksRouter(env, timeout, db, protectedRouter)
+	NewTaskRouter(env, timeout, db, protectedRouter)
+	NewUserRouter(env, timeout, db, protectedRouter)
 }

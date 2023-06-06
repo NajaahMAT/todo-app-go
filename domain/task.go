@@ -17,7 +17,8 @@ type Task struct {
 	Status      string             `bson:"status" json:"status"`
 	Description string             `bson:"description" json:"description"`
 	File        string             `bson:"file" json:"file"`
-	CreatedAt   string             `bson:"created_at" json:"created_at"`
+	CreatedAt   time.Time          `bson:"created_at" json:"created_at"`
+	UpdatedAt   time.Time          `bson:"updated_at" json:"updated_at"`
 	UserID      primitive.ObjectID `bson:"user_id" json:"user_id"`
 }
 
@@ -26,22 +27,26 @@ type CreateTaskReq struct {
 	Status      string `form:"status" json:"status"`
 	Description string `form:"description" json:"description"`
 	File        string `form:"file" json:"file"`
-	CreatedAt   string `form:"created_at" json:"created_at"`
 	UserID      string `form:"user_id" json:"user_id"`
 }
 
-type GetTasksReq struct {
-	UserID string `form:"user_id" json:"user_id"`
-	// ID        string `form:"id" json:"id"`
-	// Status    string `form:"status" json:"status"`
-	// StartDate string `form:"start_date" json:"start_date"`
-	// EndDate   string `form:"end_date" json:"end_date"`
+type UpdateTaskReq struct {
+	ID          string `form:"id" json:"id"`
+	Title       string `form:"title" json:"title"`
+	Status      string `form:"status" json:"status"`
+	Description string `form:"description" json:"description"`
+	File        string `form:"file" json:"file"`
+}
+
+type UpdateStatusReq struct {
+	ID     string `form:"id" json:"id"`
+	Status string `form:"status" json:"status"`
 }
 
 type TaskRepository interface {
 	Create(c context.Context, task *Task) error
 	FetchAllTasksByUserID(c context.Context, userID string) ([]Task, error)
-	FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate time.Time, endDate time.Time) ([]Task, error)
+	FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate string, endDate string) ([]Task, error)
 	FetchTasksByStatusAndUserID(c context.Context, userID string, status string) ([]Task, error)
 	FetchTaskByID(c context.Context, id string) (Task, error)
 	UpdateTaskByID(c context.Context, task *Task) error
@@ -52,7 +57,7 @@ type TaskRepository interface {
 type TaskUsecase interface {
 	Create(c context.Context, task *Task) error
 	FetchAllTasksByUserID(c context.Context, userID string) ([]Task, error)
-	FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate time.Time, endDate time.Time) ([]Task, error)
+	FetchTasksByDateRangeAndUserID(c context.Context, userID string, startDate string, endDate string) ([]Task, error)
 	FetchTasksByStatusAndUserID(c context.Context, userID string, status string) ([]Task, error)
 	FetchTaskByID(c context.Context, id string) (Task, error)
 	UpdateTaskByID(c context.Context, task *Task) error
