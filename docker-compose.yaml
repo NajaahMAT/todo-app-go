@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - "3306:3306"
+      - "$PORT:$PORT"
     depends_on:
       - mongodb
 

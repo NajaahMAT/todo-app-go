@@ -11,8 +11,12 @@ type Env struct {
 	ServerAddress  string `mapstructure:"SERVER_ADDRESS"`
 	PORT           int    `mapstructure:"PORT"`
 	ContextTimeout int    `mapstructure:"CONTEXT_TIMEOUT"`
-	MongoURI       string `mapstructure:"MONGO_URI"`
-	DBName         string `mapstructure:"DB_NAME"`
+	// MongoURI       string `mapstructure:"MONGO_URI"`
+	DBName string `mapstructure:"DB_NAME"`
+	DBHost string `mapstructure:"DB_HOST"`
+	DBPort string `mapstructure:"DB_PORT"`
+	DBUser string `mapstructure:"DB_USER"`
+	DBPass string `mapstructure:"DB_PASS"`
 
 	//auth configs
 	AccessTokenExpiryHour  int    `mapstructure:"ACCESS_TOKEN_EXPIRY_HOUR"`
@@ -55,10 +59,6 @@ func NewEnv() *Env {
 		log.Fatal("CONTEXT_TIMEOUT should be a postive integer .env file ")
 	} else {
 		log.Println("Context timeout set to the value : ", env.ContextTimeout)
-	}
-
-	if env.MongoURI == `` {
-		log.Fatal("MONGO_URI cannot be an empty string .env file ")
 	}
 
 	if env.DBName == `` {
