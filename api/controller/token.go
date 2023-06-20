@@ -54,5 +54,8 @@ func (t *TokenController) RefreshToken(c *gin.Context) {
 		RefreshToken: refreshToken,
 	}
 
+	c.SetCookie("access_token", accessToken, t.Env.AccessTokenExpiryHour, "/", "localhost", false, true)
+	c.SetCookie("logged_in", "true", t.Env.AccessTokenExpiryHour, "/", "localhost", false, false)
+
 	c.JSON(http.StatusOK, refreshTokenResponse)
 }

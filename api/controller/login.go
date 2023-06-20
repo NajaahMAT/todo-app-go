@@ -31,7 +31,8 @@ func (l *LoginController) Login(c *gin.Context) {
 		return
 	}
 
-	if bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginRequest.Password)) != nil {
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginRequest.Password))
+	if err != nil {
 		c.JSON(http.StatusUnauthorized, domain.ErrorResponse{Message: "Invalid credentials"})
 		return
 	}
@@ -51,7 +52,13 @@ func (l *LoginController) Login(c *gin.Context) {
 	loginResponse := domain.LoginResponse{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
+		UserID:       user.ID.Hex(),
 	}
+
+	c.SetCookie("access_token", accessToken, l.Env.AccessTokenExpiryHour, "/", "localhost", false, true)
+	c.SetCookie("refresh_token", refreshToken, l.Env.RefreshTokenExpiryHour, "/", "localhost", false, true)
+	c.SetCookie("logged_in", "true", l.Env.AccessTokenExpiryHour, "/", "localhost", false, false)
+	c.SetCookie("user_id", user.ID.Hex(), 0, "", "", false, false)
 
 	c.JSON(http.StatusOK, loginResponse)
 }

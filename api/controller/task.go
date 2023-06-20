@@ -66,6 +66,8 @@ func (t *TaskController) GetTasksByUserID(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("Tasks list:", tasks)
+
 	c.JSON(http.StatusOK, tasks)
 }
 
